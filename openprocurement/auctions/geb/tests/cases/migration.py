@@ -6,7 +6,7 @@ from openprocurement.auctions.geb.tests.fixtures.draft import AUCTION
 from openprocurement.auctions.geb.tests.blanks.migration_blanks import migrate_cancellations_document_of
 from openprocurement.auctions.geb.migration import GebMigrationRunner, DocumentOfCancellationsStep, PACKAGE_ALIASES
 from openprocurement.auctions.geb.tests.states import ProcedureMachine
-from openregistry.assets.core.tests.base import MigrationResourcesDTO_mock
+from openprocurement.api.tests.fixtures.mocks import MigrationResourcesDTO_mock
 
 
 class TestDocumentOfCancellationsMigration(BaseWebTest):

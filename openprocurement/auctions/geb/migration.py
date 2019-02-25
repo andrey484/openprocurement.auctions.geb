@@ -1,7 +1,13 @@
 from openprocurement.api.migration import (
     BaseMigrationsRunner,
     BaseMigrationStep,
+    MigrationResourcesDTO,
+    AliasesInfoDTO
 )
+
+PACKAGE_ALIASES = {
+    'openprocurement.auctions.geb': ['landlease']
+}
 
 
 def migrate_cancellations_document_of_tender(auction):
@@ -26,7 +32,7 @@ class DocumentOfCancellationsStep(BaseMigrationStep):
 
     def setUp(self):
         self.view = 'auctions/all'
-        self.procurement_method_types = ['landlease']
+        self.procurement_method_types = self.resources.aliases_info.get_package_aliases('openprocurement.auctions.geb')
 
     def migrate_document(self, auction):
         if auction['procurementMethodType'] in self.procurement_method_types:
@@ -39,5 +45,8 @@ MIGRATION_STEPS = (DocumentOfCancellationsStep, )
 
 
 def migrate(db):
-    runner = GebMigrationRunner(db)
+    aliases_info_dto = AliasesInfoDTO(PACKAGE_ALIASES)
+    migration_resource_dto = MigrationResourcesDTO(db, aliases_info_dto)
+
+    runner = GebMigrationRunner(migration_resource_dto)
     runner.migrate(MIGRATION_STEPS)

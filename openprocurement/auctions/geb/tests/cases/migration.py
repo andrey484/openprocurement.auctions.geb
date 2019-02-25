@@ -4,8 +4,9 @@ from openprocurement.auctions.core.tests.base import snitch
 from openprocurement.auctions.geb.tests.base import BaseWebTest
 from openprocurement.auctions.geb.tests.fixtures.draft import AUCTION
 from openprocurement.auctions.geb.tests.blanks.migration_blanks import migrate_cancellations_document_of
-from openprocurement.auctions.geb.migration import GebMigrationRunner, DocumentOfCancellationsStep
+from openprocurement.auctions.geb.migration import GebMigrationRunner, DocumentOfCancellationsStep, PACKAGE_ALIASES
 from openprocurement.auctions.geb.tests.states import ProcedureMachine
+from openregistry.assets.core.tests.base import MigrationResourcesDTO_mock
 
 
 class TestDocumentOfCancellationsMigration(BaseWebTest):
@@ -21,7 +22,11 @@ class TestDocumentOfCancellationsMigration(BaseWebTest):
 
     def setUp(self):
         super(TestDocumentOfCancellationsMigration, self).setUp()
-        self.runner = GebMigrationRunner(self.db)
+        self.runner = GebMigrationRunner(
+            MigrationResourcesDTO_mock(
+                self.db, PACKAGE_ALIASES
+            )
+        )
         self.steps = (DocumentOfCancellationsStep, )
 
         procedure = ProcedureMachine()

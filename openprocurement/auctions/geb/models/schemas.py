@@ -121,7 +121,7 @@ class AuctionDocument(BaseDocument):
 @implementer(ICancellationDocument)
 class CancellationDocument(BaseDocument):
 
-    documentOf = StringType(required=True, choices=['cancellation'], default='cancellation')
+    documentOf = StringType(required=True, choices=['cancellation', 'auction'], default='auction')
 
     documentType = StringType(choices=CANCELLATION_DOCUMENT_TYPES)
 

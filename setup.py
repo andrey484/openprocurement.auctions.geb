@@ -7,7 +7,7 @@ entry_points = {
         'auctions.geb = openprocurement.auctions.geb.includeme:includeme',
     ],
     'openprocurement.auctions.geb.plugins': [
-        'geb.migration = openprocurement.auctions.geb.migration:migrate_data',
+        'main = openprocurement.auctions.geb.migration:migrate',
     ]
 }
 

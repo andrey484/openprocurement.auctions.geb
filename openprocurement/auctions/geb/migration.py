@@ -5,10 +5,6 @@ from openprocurement.api.migration import (
     AliasesInfoDTO
 )
 
-PACKAGE_ALIASES = {
-    'openprocurement.auctions.geb': ['landlease']
-}
-
 
 def migrate_cancellations_document_of_tender(auction):
     changed = False
@@ -44,9 +40,6 @@ class DocumentOfCancellationsStep(BaseMigrationStep):
 MIGRATION_STEPS = (DocumentOfCancellationsStep, )
 
 
-def migrate(db):
-    aliases_info_dto = AliasesInfoDTO(PACKAGE_ALIASES)
-    migration_resource_dto = MigrationResourcesDTO(db, aliases_info_dto)
-
-    runner = GebMigrationRunner(migration_resource_dto)
+def migrate(resources):
+    runner = GebMigrationRunner(resources)
     runner.migrate(MIGRATION_STEPS)
